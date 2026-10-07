@@ -179,3 +179,82 @@ body {
 .paper-overview, .goal-ctg-figure { display:block; width:100%; height:auto; margin:1.5rem auto 2rem; }
 .goal-video-block { margin-top:2rem; margin-bottom:1rem; }
 .figure-caption { color:#666; font-size:.9rem; margin-top:.75rem; }
+
+/* Conceptual planning pipeline shown under Motivation. */
+.concept-pipeline {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1.18fr auto 1fr;
+  gap: 0.7rem;
+  align-items: center;
+  margin: 2.1rem auto 2.7rem;
+}
+.concept-node {
+  min-height: 118px;
+  border-radius: 14px;
+  padding: 1.15rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 3px 12px rgba(20, 35, 55, 0.06);
+}
+.concept-title {
+  display: block;
+  font-family: 'Google Sans', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #303742;
+}
+.concept-subtitle {
+  display: block;
+  margin-top: 0.42rem;
+  color: #58616d;
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+.node-rgb {
+  background: linear-gradient(145deg, #eef5ff, #f7faff);
+  border-color: #cbdcf7;
+}
+.node-trav {
+  background: linear-gradient(145deg, #eefbf1, #f8fff9);
+  border-color: #c8e9d0;
+}
+.node-ctg {
+  background: linear-gradient(145deg, #fff7df, #fffdf5);
+  border-color: #f0d995;
+}
+.node-plan {
+  background: linear-gradient(145deg, #f4efff, #fbf9ff);
+  border-color: #dacdf4;
+}
+.concept-arrow {
+  color: #7c8796;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+.method-figure {
+  width: 100%;
+  margin: 1.7rem auto 2.5rem;
+}
+.method-figure .paper-overview {
+  width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+@media screen and (max-width: 768px) {
+  .concept-pipeline {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+  .concept-arrow {
+    transform: rotate(90deg);
+    text-align: center;
+  }
+  .concept-node {
+    min-height: 100px;
+  }
+}
