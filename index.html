@@ -107,9 +107,10 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <video id="teaser" autoplay muted loop playsinline preload="metadata">
-        <source src="./static/videos/VGN.mp4" type="video/mp4">
-      </video>
+      <div class="teaser-placeholder">
+  <img src="./assets/animated_tiny/sim_final.webp" alt="VGN closed-loop simulation preview">
+  <div class="teaser-label">VGN closed-loop navigation preview</div>
+</div>
       <h2 class="subtitle has-text-centered">
         <span class="vgn-name">VGN</span> predicts dense traversability and a goal-conditioned
         cost-to-go field, then exposes that representation to multiple downstream planners.
@@ -120,37 +121,16 @@
 
 <section class="hero is-light is-small" id="demos">
   <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item">
-          <video autoplay controls muted loop playsinline preload="metadata">
-            <source src="./static/videos/sim_final.mp4" type="video/mp4">
-          </video>
-          <p class="carousel-caption">Closed-loop simulation</p>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop playsinline preload="metadata">
-            <source src="./static/videos/c2a_final.mp4" type="video/mp4">
-          </video>
-          <p class="carousel-caption">Outdoor navigation</p>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop playsinline preload="metadata">
-            <source src="./static/videos/c2d_final.mp4" type="video/mp4">
-          </video>
-          <p class="carousel-caption">Obstacle-rich outdoor navigation</p>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop playsinline preload="metadata">
-            <source src="./static/videos/in_final.mp4" type="video/mp4">
-          </video>
-          <p class="carousel-caption">Indoor transfer</p>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop playsinline preload="metadata">
-            <source src="./static/videos/last.mp4" type="video/mp4">
-          </video>
-          <p class="carousel-caption">Evening / low-light navigation</p>
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Navigation Demonstrations</h2>
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div class="teaser-placeholder">
+            <img src="./assets/animated_tiny/sim_final.webp" alt="VGN navigation demo preview">
+          </div>
+          <p class="has-text-centered carousel-caption">
+            Closed-loop preview. The final page is structured for the main project video plus separate simulation, outdoor, indoor, and low-light clips.
+          </p>
         </div>
       </div>
     </div>
@@ -185,15 +165,12 @@
     <div class="columns is-centered has-text-centered" id="video">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <video controls muted playsinline preload="metadata" width="100%">
-            <source src="./static/videos/VGN.mp4" type="video/mp4">
-          </video>
-        </div>
-        <p class="media-note">
-          Repository video is a lightweight web preview. Replace the same file with a higher-quality
-          encode or a YouTube embed for the final public page.
-        </p>
+        <div class="publication-video teaser-placeholder">
+  <img src="./assets/animated_tiny/sim_final.webp" alt="VGN project video preview">
+</div>
+<p class="media-note">
+  Full project video and environment-specific MP4 clips are kept out of this first GitHub commit so the page stays lightweight. Drop the web encodes into <code>static/videos/</code> using the filenames documented in the README.
+</p>
       </div>
     </div>
   </div>
@@ -214,9 +191,15 @@
             the lightweight inference path at deployment.
           </p>
         </div>
-        <div class="publication-banner">
-          <img src="./static/images/overview.webp" alt="VGN training and inference framework.">
-        </div>
+        <div class="method-graphic">
+  <div><b>RGB</b><span>single monocular observation</span></div>
+  <div class="method-arrow">→</div>
+  <div><b>Traversability</b><span>dense terrain feasibility</span></div>
+  <div class="method-arrow">→</div>
+  <div><b>Goal-conditioned CTG</b><span>dense planning value</span></div>
+  <div class="method-arrow">→</div>
+  <div><b>Planner</b><span>graph / gradient / sampling</span></div>
+</div>
 
         <br>
         <div class="columns is-centered">
@@ -227,8 +210,7 @@
                 Dense student features are aligned with teacher semantic-region embeddings so that the
                 learned traversability representation retains terrain-aware semantic structure.
               </p>
-              <img class="rounded-figure" src="./static/images/semantic.webp"
-                   alt="Semantic token refinement module.">
+              <div class="figure-placeholder"><b>Semantic distillation</b><span>Teacher region semantics → dense student features</span></div>
             </div>
           </div>
           <div class="column">
@@ -238,8 +220,7 @@
                 The CTG head combines traversability, the projected goal, and spatial context to predict
                 a dense value field that changes with both scene geometry and the destination.
               </p>
-              <img class="rounded-figure" src="./static/images/ctg-head.webp"
-                   alt="Goal-conditioned cost-to-go prediction head.">
+              <div class="figure-placeholder"><b>Goal-conditioned CTG head</b><span>Traversability + goal + spatial context → dense CTG</span></div>
             </div>
           </div>
         </div>
@@ -273,13 +254,12 @@
           </div>
         </div>
 
-        <div class="publication-banner goal-banner">
-          <img src="./static/images/goal-conditioned.webp"
-               alt="Same scene with different goals producing different CTG fields.">
-        </div>
-        <p class="has-text-centered figure-caption">
-          Different projected goals over the same scene produce different goal-conditioned CTG fields.
-        </p>
+        <div class="goal-demo">
+  <div><b>Same RGB scene</b><span>Goal A → CTG A</span></div>
+  <div><b>Same RGB scene</b><span>Goal B → CTG B</span></div>
+  <div><b>Same RGB scene</b><span>Goal C → CTG C</span></div>
+</div>
+<p class="has-text-centered figure-caption">Different projected goals over the same scene produce different goal-conditioned CTG fields.</p>
       </div>
     </div>
   </div>
@@ -296,9 +276,9 @@
         both traversability structure and goal-conditioned CTG correlation.
       </p>
     </div>
-    <div class="publication-banner">
-      <img src="./static/images/cross-domain.webp" alt="Cross-environment traversability and CTG predictions.">
-    </div>
+    <div class="dataset-strip">
+  <span>RUGD</span><span>RELLIS</span><span>GOOSE</span><span>NaviTrace</span><span>Cityscapes</span>
+</div>
     <div class="table-container result-table-wrap">
       <table class="table is-striped is-hoverable is-fullwidth result-table">
         <thead>
@@ -320,9 +300,9 @@
     </div>
 
     <h3 class="title is-4 result-heading">Closed-loop navigation</h3>
-    <div class="publication-banner">
-      <img src="./static/images/closed-loop.webp" alt="VGN closed-loop Forest and City results.">
-    </div>
+    <div class="teaser-placeholder compact">
+  <img src="./assets/animated_tiny/sim_final.webp" alt="Closed-loop simulation preview">
+</div>
     <div class="table-container result-table-wrap">
       <table class="table is-striped is-hoverable is-fullwidth result-table">
         <thead>
@@ -393,9 +373,12 @@
             indoor corridors, and illumination changes.
           </p>
         </div>
-        <div class="publication-banner">
-          <img src="./static/images/real-world.webp" alt="Representative VGN real-world robot deployments.">
-        </div>
+        <div class="deployment-grid">
+  <div><b>Outdoor trail</b><span>RGB → CTG → local plan</span></div>
+  <div><b>Obstacle-rich scene</b><span>replanning around clutter</span></div>
+  <div><b>Indoor transfer</b><span>zero-shot corridor navigation</span></div>
+  <div><b>Low light</b><span>illumination-shift deployment</span></div>
+</div>
       </div>
     </div>
   </div>
