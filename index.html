@@ -94,45 +94,98 @@
 
         <div class="content has-text-justified">
           <h3 class="title is-4">Motivation</h3>
-<p>Visual navigation offers a compelling alternative to sensing-heavy navigation stacks because visual observations can support both scene understanding and local planning. However, existing modular systems often require robot interaction, temporal aggregation, or additional sensing to learn reliable traversability, while end-to-end approaches commonly learn navigation structure indirectly from demonstrations, reinforcement learning, or trajectory optimization. VGN asks whether navigation-oriented planning structure can instead be learned explicitly from static RGB imagery, while retaining the structured reasoning of modular planning and the reactive behavior of learned navigation. We use goal-conditioned cost-to-go as this intermediate representation, providing dense goal-directed planning structure without directly predicting actions or trajectories.</p>
-<img class="paper-overview" src="./static/images/vgn_overview.webp" alt="Overview of the VGN framework">
-<h3 class="title is-4">VGN</h3>
           <p>
-            A teacher pipeline grounds semantic regions in the input image, converts these regions into
-            a dense traversability map, samples a projected goal, and computes a traversability-aware CTG
-            field using classical planning. A student network then learns to predict both traversability
-            and goal-conditioned CTG from RGB. At test time, the same representation can support graph
-            search, direct CTG-gradient rollout, or gradient-guided sampling.
+            Visual navigation from monocular RGB is attractive because cameras are inexpensive, information-rich,
+            and already available on most mobile robots. The challenge is that a robot must infer more than what is
+            visually present: it must understand which regions are physically traversable, how that traversability
+            should influence motion toward a particular goal, and how to turn those visual cues into a safe plan.
+            Classical modular pipelines make this structure explicit, but reliable traversability estimation often
+            depends on additional sensing, temporal aggregation, robot interaction, or carefully engineered mapping
+            components. These requirements can make perception and planning stacks heavier and harder to scale across
+            diverse environments.
+          </p>
+          <p>
+            End-to-end navigation methods take the opposite route by learning actions, waypoints, or trajectories
+            directly from visual observations. Although these systems can be highly reactive, navigation-relevant
+            scene structure is usually learned indirectly through demonstrations, reinforcement learning, or
+            optimization trajectories. VGN targets a middle ground between these two paradigms: rather than predicting
+            only a trajectory, it learns an explicit, dense planning representation from static RGB imagery. The key
+            representation is a goal-conditioned cost-to-go (CTG) field, which preserves spatial planning structure,
+            changes naturally with the target location, and remains usable by different downstream planners.
           </p>
         </div>
 
-        <div class="pipeline-figure">
-          <div class="pipe-node"><b>RGB</b><span>Monocular observation</span></div>
-          <div class="pipe-arrow">→</div>
-          <div class="pipe-node"><b>Traversability</b><span>Dense terrain feasibility</span></div>
-          <div class="pipe-arrow">→</div>
-          <div class="pipe-node"><b>Goal-conditioned CTG</b><span>Dense planning value</span></div>
-          <div class="pipe-arrow">→</div>
-          <div class="pipe-node"><b>Planner</b><span>Graph / Gradient / Sampling</span></div>
+        <div class="concept-pipeline" aria-label="VGN planning representation">
+          <div class="concept-node node-rgb">
+            <span class="concept-title">RGB</span>
+            <span class="concept-subtitle">Monocular observation</span>
+          </div>
+          <div class="concept-arrow">→</div>
+          <div class="concept-node node-trav">
+            <span class="concept-title">Traversability</span>
+            <span class="concept-subtitle">Dense terrain feasibility</span>
+          </div>
+          <div class="concept-arrow">→</div>
+          <div class="concept-node node-ctg">
+            <span class="concept-title">Goal-conditioned CTG</span>
+            <span class="concept-subtitle">Dense planning value</span>
+          </div>
+          <div class="concept-arrow">→</div>
+          <div class="concept-node node-plan">
+            <span class="concept-title">Planner</span>
+            <span class="concept-subtitle">Graph / Gradient / Sampling</span>
+          </div>
         </div>
 
         <div class="content has-text-justified">
-<div class="columns is-centered has-text-centered goal-video-block">
-  <div class="column is-four-fifths">
-    <h3 class="title is-4">Goal-Conditioned Planning</h3>
-    <div class="publication-video"><iframe src="https://www.youtube.com/embed/8OezV6b8ycg?rel=0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
-    <p class="figure-caption">The traversability map remains fixed while different goal locations induce different dense CTG fields, illustrating adaptive goal-aware planning.</p>
-    <img class="goal-ctg-figure" src="./static/images/goal_conditioned_ctg.webp" alt="Goal-conditioned cost-to-go examples">
-  </div>
-</div>
-<div class="content has-text-justified">
+          <h3 class="title is-4">VGN</h3>
+          <p>
+            VGN learns planning structure in two stages. First, a teacher converts a static RGB image into dense
+            navigation supervision. Text-grounded semantic regions are translated into traversability costs, and a
+            projected image-space goal is propagated through this traversability field to produce a dense CTG target.
+            This lets VGN obtain navigation-oriented supervision from ordinary images without collecting expert
+            trajectories or interacting with the environment.
+          </p>
+          <p>
+            A student model then learns to reproduce this structure directly from RGB. Dense visual features are
+            semantically aligned with the teacher, a traversability head predicts where the robot can move, and a
+            goal-conditioned CTG head predicts how the scene should be valued with respect to the current goal. At
+            inference time the teacher is removed: the robot uses the current image and projected goal to predict the
+            dense planning representation in a single forward pass. A lightweight downstream planner then converts that
+            representation into an image-space path, which is translated into linear and angular velocity commands.
+            Because the learned representation is separated from the planner itself, the same VGN output can support
+            graph search, direct CTG-gradient rollout, or gradient-guided sampling.
+          </p>
+        </div>
+
+        <figure class="method-figure">
+          <img class="paper-overview" src="./static/images/vgn_overview.webp"
+               alt="VGN training and inference framework">
+        </figure>
+
+        <div class="columns is-centered has-text-centered goal-video-block">
+          <div class="column is-four-fifths">
+            <h3 class="title is-4">Goal-Conditioned Planning</h3>
+            <div class="publication-video">
+              <iframe src="https://www.youtube.com/embed/8OezV6b8ycg?rel=0"
+                      frameborder="0"
+                      allow="autoplay; encrypted-media; picture-in-picture"
+                      allowfullscreen></iframe>
+            </div>
+            <p class="figure-caption">
+              The traversability prediction stays fixed while changing the goal produces a different CTG field,
+              allowing the planning representation to adapt to the desired destination.
+            </p>
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
           <h3 class="title is-4">Dataset</h3>
           <p>
-            We train on RUGD and evaluate zero-shot on RELLIS, GOOSE, NaviTrace, and Cityscapes.
-            The teacher generates dense traversability and CTG supervision from static RGB images,
-            allowing the student to learn goal-conditioned navigation structure without expert
-            trajectories. We also evaluate closed-loop navigation in Forest and City simulation
-            environments and deploy the learned system on a Unitree Go2 for real-world testing.
+            We train VGN using static RGB imagery and evaluate cross-environment generalization on RUGD, RELLIS,
+            GOOSE, NaviTrace, and Cityscapes. Beyond representation quality, we evaluate complete closed-loop
+            navigation in Forest and City simulation environments and deploy the learned system on a Unitree Go2
+            across outdoor, cluttered, indoor, narrow-trail, and low-light conditions.
           </p>
         </div>
       </div>
