@@ -52,19 +52,13 @@
           <h1 class="title is-2 publication-title">VGN: Value-Guided Navigation from RGB for Robot Motion Planning</h1>
           <div class="column has-text-centered">
             <div class="publication-links">
-              <span class="link-block">
-                <a href="#video" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fab fa-youtube"></i></span><span>Video</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-quote-left"></i></span><span>BibTeX</span>
-                </a>
-              </span>
-            </div>
-          </div>
-        </div>
+  <span class="link-block"><span class="button is-normal is-rounded is-dark is-static"><span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span></span></span>
+  <span class="link-block"><span class="button is-normal is-rounded is-dark is-static"><span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span></span></span>
+  <span class="link-block"><span class="button is-normal is-rounded is-dark is-static"><span class="icon"><i class="fab fa-github"></i></span><span>Code</span></span></span>
+  <span class="link-block"><a href="#BibTeX" class="external-link button is-normal is-rounded is-dark"><span class="icon"><i class="fas fa-quote-left"></i></span><span>BibTeX</span></a></span>
+</div>
+</div>
+</div>
       </div>
     </div>
   </div>
@@ -76,34 +70,15 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-          <p>
-            Visual navigation from monocular RGB requires reliable scene understanding and safe
-            goal-directed decision making. VGN learns dense traversability and a goal-conditioned
-            cost-to-go (CTG) representation directly from a single RGB observation. Instead of
-            requiring trajectory-centric supervision or robot interaction, a teacher pipeline
-            combines vision foundation models with classical planning to convert static RGB images
-            into dense navigation-oriented pseudo-supervision.
-          </p>
-          <p>
-            At deployment, the teacher is removed. The student predicts traversability and CTG from
-            RGB, providing an explicit planning representation that can be consumed by multiple
-            downstream planners, including graph search, direct gradient rollout, and
-            gradient-guided sampling.
-          </p>
-        </div>
+<p>Visual navigation from monocular RGB observations remains challenging due to the need for reliable scene understanding and safe decision-making in diverse real-world environments. Existing modular approaches often depend on additional sensing or interaction-heavy pipelines for reliable traversability estimation, while end-to-end methods typically infer navigation-relevant structure indirectly through trajectory-centric supervision. Motivated by these observations, we propose Value-Guided Navigation (VGN), an RGB-based framework for learning dense traversability-aware and goal-conditioned planning representations for downstream navigation. To achieve this, we leverage vision foundation models together with classical planning algorithms to generate dense traversability and cost-to-go pseudo-labels directly from static RGB images. This supervision is generated without trajectory supervision or robot interaction and is used to train the student planning representation model. The learned representation is planner-agnostic and can be integrated with multiple downstream planning mechanisms. Experiments across multiple outdoor datasets, closed-loop simulation environments, and real-world deployment on a Unitree Go2 robot demonstrate effective RGB-based traversability estimation and local motion planning.</p>
+</div>
       </div>
     </div>
 
     <div class="columns is-centered has-text-centered" id="video">
       <div class="column is-four-fifths">
         <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <div class="youtube-placeholder">
-            <div>
-              <i class="fab fa-youtube"></i>
-              <p>Full high-resolution project video</p>
-              <span>Upload to YouTube and paste the video ID here for final embedding.</span>
-            </div>
+        <div class="publication-video"><iframe src="https://www.youtube.com/embed/gRLV5RqoNBw?rel=0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
           </div>
         </div>
       </div>
@@ -119,15 +94,9 @@
 
         <div class="content has-text-justified">
           <h3 class="title is-4">Motivation</h3>
-          <p>
-            Most visual navigation methods either predict actions or trajectories directly, or rely
-            on hand-designed intermediate costs. VGN instead learns a dense navigation representation
-            from RGB that separates scene understanding from the downstream planning mechanism. The
-            goal is to preserve explicit planning structure while retaining the flexibility of learned
-            perception.
-          </p>
-
-          <h3 class="title is-4">VGN</h3>
+<p>Visual navigation offers a compelling alternative to sensing-heavy navigation stacks because visual observations can support both scene understanding and local planning. However, existing modular systems often require robot interaction, temporal aggregation, or additional sensing to learn reliable traversability, while end-to-end approaches commonly learn navigation structure indirectly from demonstrations, reinforcement learning, or trajectory optimization. VGN asks whether navigation-oriented planning structure can instead be learned explicitly from static RGB imagery, while retaining the structured reasoning of modular planning and the reactive behavior of learned navigation. We use goal-conditioned cost-to-go as this intermediate representation, providing dense goal-directed planning structure without directly predicting actions or trajectories.</p>
+<img class="paper-overview" src="./static/images/vgn_overview.webp" alt="Overview of the VGN framework">
+<h3 class="title is-4">VGN</h3>
           <p>
             A teacher pipeline grounds semantic regions in the input image, converts these regions into
             a dense traversability map, samples a projected goal, and computes a traversability-aware CTG
@@ -148,6 +117,15 @@
         </div>
 
         <div class="content has-text-justified">
+<div class="columns is-centered has-text-centered goal-video-block">
+  <div class="column is-four-fifths">
+    <h3 class="title is-4">Goal-Conditioned Planning</h3>
+    <div class="publication-video"><iframe src="https://www.youtube.com/embed/8OezV6b8ycg?rel=0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
+    <p class="figure-caption">The traversability map remains fixed while different goal locations induce different dense CTG fields, illustrating adaptive goal-aware planning.</p>
+    <img class="goal-ctg-figure" src="./static/images/goal_conditioned_ctg.webp" alt="Goal-conditioned cost-to-go examples">
+  </div>
+</div>
+<div class="content has-text-justified">
           <h3 class="title is-4">Dataset</h3>
           <p>
             We train on RUGD and evaluate zero-shot on RELLIS, GOOSE, NaviTrace, and Cityscapes.
@@ -209,35 +187,15 @@
         </div>
 
         <div class="demo-grid">
-          <div class="demo-card">
-            <div class="video-placeholder">Simulation video</div>
-            <h4 class="title is-5">Closed-loop Simulation</h4>
-          </div>
-          <div class="demo-card">
-            <div class="video-placeholder">Outdoor video</div>
-            <h4 class="title is-5">Outdoor Navigation</h4>
-          </div>
-          <div class="demo-card">
-            <div class="video-placeholder">Obstacle-rich video</div>
-            <h4 class="title is-5">Obstacle-rich Outdoor Scene</h4>
-          </div>
-          <div class="demo-card">
-            <div class="video-placeholder">Indoor video</div>
-            <h4 class="title is-5">Indoor Transfer</h4>
-          </div>
-          <div class="demo-card">
-            <div class="video-placeholder">Low-light video</div>
-            <h4 class="title is-5">Evening / Low Light</h4>
-          </div>
-          <div class="demo-card">
-            <div class="video-placeholder">Additional real-world video</div>
-            <h4 class="title is-5">Additional Real-World Demo</h4>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="demo-card"><div class="publication-video"><iframe src="https://www.youtube.com/embed/79Wb34PJ8HM?rel=0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div><h4 class="title is-5">Closed-loop Simulation</h4></div>
+<div class="demo-card"><div class="publication-video"><iframe src="https://www.youtube.com/embed/xXgu1c9TQ_M?rel=0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div><h4 class="title is-5">Indoor Navigation</h4></div>
+<div class="demo-card"><div class="publication-video"><iframe src="https://www.youtube.com/embed/zx7VHTQwbDA?rel=0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div><h4 class="title is-5">Cluttered Outdoor Scene 1</h4></div>
+<div class="demo-card"><div class="publication-video"><iframe src="https://www.youtube.com/embed/rFzRoMr20zQ?rel=0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div><h4 class="title is-5">Cluttered Outdoor Scene 2</h4></div>
+<div class="demo-card"><div class="publication-video"><iframe src="https://www.youtube.com/embed/LIC9VybS67c?rel=0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div><h4 class="title is-5">Park Navigation</h4></div>
+<div class="demo-card"><div class="publication-video"><iframe src="https://www.youtube.com/embed/Dd7idkMBWRI?rel=0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div><h4 class="title is-5">Night Navigation</h4></div>
+<div class="demo-card"><div class="publication-video"><iframe src="https://www.youtube.com/embed/0i0Zw81dGuM?rel=0" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div><h4 class="title is-5">Narrow Trail</h4></div>
+</div>
+</div></div></div></section>
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop">
