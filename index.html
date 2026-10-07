@@ -140,26 +140,18 @@
         <div class="content has-text-justified">
           <h3 class="title is-4">VGN</h3>
           <p>
-            VGN learns planning structure in two stages. First, a teacher converts a static RGB image into dense
-            navigation supervision. Text-grounded semantic regions are translated into traversability costs, and a
-            projected image-space goal is propagated through this traversability field to produce a dense CTG target.
-            This lets VGN obtain navigation-oriented supervision from ordinary images without collecting expert
-            trajectories or interacting with the environment.
+            VGN converts a monocular RGB observation into an explicit planning representation instead of directly regressing a trajectory. During training, a teacher first grounds semantic regions in the image and maps those regions to traversability costs. A projected image-space goal is then introduced, and classical planning propagates this information through the traversability field to produce a dense goal-conditioned CTG target. In parallel, the student learns semantic structure from the teacher while predicting its own dense traversability map.
           </p>
           <p>
-            A student model then learns to reproduce this structure directly from RGB. Dense visual features are
-            semantically aligned with the teacher, a traversability head predicts where the robot can move, and a
-            goal-conditioned CTG head predicts how the scene should be valued with respect to the current goal. At
-            inference time the teacher is removed: the robot uses the current image and projected goal to predict the
-            dense planning representation in a single forward pass. A lightweight downstream planner then converts that
-            representation into an image-space path, which is translated into linear and angular velocity commands.
-            Because the learned representation is separated from the planner itself, the same VGN output can support
-            graph search, direct CTG-gradient rollout, or gradient-guided sampling.
+            The predicted traversability map is combined with the current projected goal by the CTG head, allowing the student to infer how costly or desirable each image region is with respect to that particular destination. Once training is complete, the teacher and classical supervision pipeline are discarded. At deployment, the robot needs only the current RGB image and point goal: the student predicts traversability and the goal-conditioned CTG in a single feed-forward pass, and a lightweight planner turns this representation into a local image-space path and motion commands.
+          </p>
+          <p>
+            Because VGN learns a dense planning representation rather than a planner-specific action output, the same prediction can be reused by different downstream mechanisms. We evaluate explicit graph search, direct CTG-gradient rollout, and gradient-guided sampling, allowing the perception model and planner to remain modular while sharing the same learned navigation representation.
           </p>
         </div>
 
         <figure class="method-figure">
-          <img class="paper-overview" src="./static/images/vgn_overview.webp"
+          <img class="paper-overview" src="./static/images/VGN_method.webp"
                alt="VGN training and inference framework">
         </figure>
 
