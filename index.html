@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="VGN learns traversability-aware, goal-conditioned planning representations from monocular RGB for planner-agnostic robot navigation." />
+  <meta property="og:title" content="VGN — Value-Guided Navigation" />
+  <meta property="og:description" content="Learning goal-conditioned planning representations from monocular RGB for planner-agnostic robot navigation." />
+  <title>VGN — Value-Guided Navigation</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<main>
+  <section class="hero shell" id="top">
+    <h1><span class="vgn">VGN</span>: Value-Guided Navigation from RGB<br class="desktop" /> for Robot Motion Planning</h1>
+    <p class="authors">Anonymous Authors</p>
+    <p class="venue">Under review at ICLR 2027</p>
+    <div class="links">
+      <a class="pill" href="#abstract">Abstract</a>
+      <a class="pill" href="#method">Method</a>
+      <a class="pill" href="#results">Results</a>
+      <a class="pill" href="#demos">Demos</a>
+      <span class="pill disabled">Paper</span>
+      <span class="pill disabled">Code</span>
+    </div>
+    <p class="hero-line">Learning <strong>traversability-aware, goal-conditioned planning representations</strong> from monocular RGB for <strong>planner-agnostic navigation</strong>.</p>
+  </section>
+
+  <section class="shell wide teaser">
+    <div class="video-box video-main">
+      <img class="motion-preview" src="assets/animated_tiny/sim_final.webp" alt="Animated VGN closed-loop simulation preview" />
+      <div class="preview-badge">VGN closed-loop navigation preview</div>
+    </div>
+    <p class="caption">RGB → traversability → goal-conditioned cost-to-go → image-space planning → closed-loop robot motion.</p>
+  </section>
+
+  <section class="shell section" id="abstract">
+    <h2>Abstract</h2>
+    <p class="lead-copy">Visual navigation from monocular RGB requires reliable scene understanding and safe goal-directed decision making. VGN learns a dense <strong>traversability map</strong> and a <strong>goal-conditioned cost-to-go (CTG) representation</strong> directly from a single RGB observation. Instead of learning only from expert trajectories or robot interaction, a teacher pipeline combines vision foundation models with classical planning to convert static RGB images into dense navigation-oriented pseudo-supervision.</p>
+    <p class="lead-copy">The learned representation is designed as an interface to downstream planning rather than as a single fixed trajectory generator. At deployment, the same predicted traversability and CTG fields can support graph search, direct gradient rollout, or gradient-guided sampling for local image-space navigation.</p>
+  </section>
+
+  <section class="shell section" id="method">
+    <h2>Approach</h2>
+    <div class="representation-flow">
+      <div class="rep-input"><span class="kicker">Input</span><strong>Monocular RGB + projected goal</strong></div>
+      <div class="flow-arrow">→</div>
+      <div class="planner-grid">
+        <article class="planner-card"><div class="planner-icon">T</div><h3>Traversability</h3><p>Dense terrain-aware feasibility learned from teacher-generated supervision.</p></article>
+        <article class="planner-card"><div class="planner-icon">V</div><h3>Goal-conditioned CTG</h3><p>A dense value field that changes with both the scene structure and target location.</p></article>
+        <article class="planner-card"><div class="planner-icon">P</div><h3>Planner</h3><p>Use the same learned representation with multiple downstream planning strategies.</p></article>
+      </div>
+    </div>
+    <p class="center-copy">During training, GroundedSAM-derived terrain regions produce dense traversability supervision. Dijkstra propagation over this field produces goal-conditioned CTG pseudo-labels. A student network learns both representations from RGB and runs without the teacher at deployment.</p>
+  </section>
+
+  <section class="band" id="representation">
+    <div class="shell section">
+      <p class="eyebrow">PLANNER-AGNOSTIC BY DESIGN</p>
+      <h2>One representation, multiple planners</h2>
+      <p class="center-copy">VGN does not directly commit to one trajectory decoder. The learned traversability + CTG pair is a reusable planning interface.</p>
+      <div class="planner-grid">
+        <article class="planner-card"><div class="planner-icon">⌘</div><h3>Graph Search</h3><p>Explicit collision-aware search over the image-space grid.</p><strong class="metric">80%</strong><span class="metric-label">Forest success</span></article>
+        <article class="planner-card"><div class="planner-icon">∇</div><h3>Direct Gradient</h3><p>Follow descent directions of the learned planning potential.</p><strong class="metric">71%</strong><span class="metric-label">City success</span></article>
+        <article class="planner-card"><div class="planner-icon">⤳</div><h3>Gradient Sampling</h3><p>Short-horizon candidate rollouts guided by the CTG gradient.</p><strong class="metric">0.989</strong><span class="metric-label">City SPL</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell section" id="results">
+    <h2>Experiments</h2>
+    <p class="center-copy">VGN is evaluated across unseen outdoor datasets, closed-loop simulation, and real-world Unitree Go2 deployment.</p>
+
+    <h3>Cross-environment generalization</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Train → Test</th><th>Trav. MAE ↓</th><th>IoU@0.5 ↑</th><th>CTG Corr. ↑</th></tr></thead>
+        <tbody>
+          <tr class="focus"><td>RUGD → RUGD</td><td>0.037</td><td>0.933</td><td>0.952</td></tr>
+          <tr><td>RUGD → RELLIS</td><td>0.060</td><td>0.880</td><td><strong>0.968</strong></td></tr>
+          <tr><td>RUGD → GOOSE</td><td>0.073</td><td>0.816</td><td>0.864</td></tr>
+          <tr><td>RUGD → NaviTrace</td><td>0.098</td><td>0.764</td><td>0.775</td></tr>
+          <tr><td>RUGD → Cityscapes</td><td>0.050</td><td>0.915</td><td>0.920</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="spaced">Closed-loop navigation</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Complete Navigation Stack</th><th>Forest Success ↑</th><th>Forest SPL ↑</th><th>City Success ↑</th><th>City SPL ↑</th></tr></thead>
+        <tbody>
+          <tr><td>iPlanner</td><td>64%</td><td>0.639</td><td>65%</td><td>0.649</td></tr>
+          <tr><td>ViPlanner</td><td>55%</td><td>0.546</td><td>70%</td><td>0.699</td></tr>
+          <tr><td>POVNav</td><td>55%</td><td>0.465</td><td>21%</td><td>0.173</td></tr>
+          <tr class="focus"><td><strong>VGN — graph search</strong></td><td><strong>80%</strong></td><td>0.682</td><td>68%</td><td>0.659</td></tr>
+          <tr class="focus"><td><strong>VGN — direct gradient</strong></td><td>68%</td><td>0.853</td><td><strong>71%</strong></td><td>0.957</td></tr>
+          <tr class="focus"><td><strong>VGN — gradient sampling</strong></td><td>65%</td><td><strong>0.924</strong></td><td>68%</td><td><strong>0.989</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="stat-grid">
+      <article class="stat-card"><span class="stat-num">+16 pp</span><span class="stat-copy">Forest success over the strongest evaluated baseline for VGN graph search</span></article>
+      <article class="stat-card"><span class="stat-num">64 → 68%</span><span class="stat-copy">City success when graph-search input changes from traversability alone to learned CTG</span></article>
+      <article class="stat-card"><span class="stat-num">42.7 ms</span><span class="stat-copy">Learned desktop pipeline, corresponding to 23.44 FPS on RTX 4090</span></article>
+      <article class="stat-card"><span class="stat-num">1.40 Hz</span><span class="stat-copy">RGB-to-local-motion planning frequency during onboard Unitree Go2 deployment</span></article>
+    </div>
+  </section>
+
+  <section class="band demos-band" id="demos">
+    <div class="shell section">
+      <h2>Navigation demonstrations</h2>
+      <p class="center-copy">The final page will pair the full project video with short environment-specific clips for simulation, outdoor navigation, indoor transfer, and evening/low-light deployment.</p>
+      <div class="video-box video-main">
+        <img class="motion-preview" src="assets/animated_tiny/sim_final.webp" alt="Animated VGN simulation demo" />
+      </div>
+      <p class="caption">Closed-loop Forest and City simulation preview.</p>
+
+      <div class="demo-grid" style="margin-top:28px">
+        <article class="demo-card"><div style="aspect-ratio:16/9;background:linear-gradient(135deg,#17202b,#35577d);display:grid;place-items:center;color:white;font-size:15px">Outdoor navigation clip</div><h3>Outdoor navigation</h3><p>RGB → traversability → goal-conditioned CTG → local image-space plan.</p></article>
+        <article class="demo-card"><div style="aspect-ratio:16/9;background:linear-gradient(135deg,#1b2822,#52745c);display:grid;place-items:center;color:white;font-size:15px">Obstacle-rich clip</div><h3>Obstacle-rich scene</h3><p>Local replanning around trees and clutter while maintaining goal direction.</p></article>
+        <article class="demo-card"><div style="aspect-ratio:16/9;background:linear-gradient(135deg,#24252c,#686a77);display:grid;place-items:center;color:white;font-size:15px">Indoor transfer clip</div><h3>Indoor transfer</h3><p>The same RGB planning representation transfers to corridor navigation.</p></article>
+        <article class="demo-card"><div style="aspect-ratio:16/9;background:linear-gradient(135deg,#161426,#443d67);display:grid;place-items:center;color:white;font-size:15px">Evening / low-light clip</div><h3>Evening / low light</h3><p>Closed-loop behavior under a substantial illumination shift.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell section" id="takeaway">
+    <h2>Key takeaway</h2>
+    <div class="takeaway">
+      <div class="takeaway-num">RGB</div><div class="takeaway-arrow">→</div>
+      <div class="takeaway-num">Dense planning representation</div><div class="takeaway-arrow">→</div>
+      <div class="takeaway-num">Multiple planners</div><div class="takeaway-arrow">→</div>
+      <div class="takeaway-num">Robot motion</div>
+    </div>
+    <p class="center-copy">VGN occupies a middle ground between classical modular navigation and direct end-to-end policy learning: it learns explicit goal-conditioned planning structure while leaving the downstream planning mechanism flexible.</p>
+  </section>
+
+  <section class="shell section" id="citation">
+    <h2>BibTeX</h2>
+    <div class="bib-wrap">
+      <button class="copy-button" data-copy="#bibtex">Copy</button>
+      <pre id="bibtex"><code>@inproceedings{anonymous2027vgn,
+  title     = {VGN: Value-Guided Navigation from RGB for Robot Motion Planning},
+  author    = {Anonymous Authors},
+  booktitle = {International Conference on Learning Representations},
+  year      = {2027}
+}</code></pre>
+    </div>
+  </section>
+
+  <footer><div class="shell footer-inner"><span>VGN Project Page</span><span>Academic project-page layout inspired by clean robotics research sites.</span></div></footer>
+</main>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
