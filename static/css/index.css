@@ -1,0 +1,273 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.footer .icon-link {
+  font-size: 25px;
+  color: #000;
+}
+
+.link-block a,
+.link-block .button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.vgn-name {
+  font-variant: small-caps;
+  font-weight: 700;
+  color: #3273dc;
+}
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-title {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors a {
+  color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+  text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-subtitle {
+  margin-top: 1.25rem;
+  line-height: 1.45;
+}
+
+.publication-banner {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.publication-banner img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.rounded-figure {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #e9e9e9;
+}
+
+.publication-video {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px !important;
+  background: #000;
+}
+
+.publication-video video {
+  display: block;
+  width: 100%;
+}
+
+.teaser video {
+  width: 100%;
+  border-radius: 10px;
+  background: #000;
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  background: #fff;
+}
+
+.results-carousel video {
+  margin: 0;
+  width: 100%;
+  display: block;
+  background: #000;
+}
+
+.carousel-caption {
+  font-family: 'Google Sans', sans-serif;
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 0.65rem 0.8rem 0.75rem;
+  color: #4a4a4a;
+}
+
+.disabled-link {
+  cursor: default;
+  opacity: 0.72;
+}
+
+.media-note,
+.figure-caption {
+  color: #777;
+  font-size: 0.88rem;
+  margin-top: 0.65rem;
+}
+
+.goal-banner {
+  margin-top: 1.5rem;
+}
+
+.planner-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 2rem 0 1.4rem;
+}
+
+.planner-box,
+.planner-mini {
+  border: 1px solid #d9e1ea;
+  background: #f8fbff;
+  border-radius: 10px;
+}
+
+.planner-box {
+  width: 25%;
+  min-width: 180px;
+  min-height: 125px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.planner-center {
+  background: #eef5ff;
+  border-color: #b8d3f8;
+}
+
+.planner-box span {
+  display: block;
+  color: #666;
+  font-size: 0.85rem;
+  margin-top: 0.45rem;
+}
+
+.planner-icon {
+  color: #3273dc !important;
+  font-size: 1.45rem !important;
+  margin: 0 0 0.35rem !important;
+}
+
+.planner-arrow {
+  font-size: 1.75rem;
+  color: #8b98a6;
+}
+
+.planner-stack {
+  width: 24%;
+  min-width: 175px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.planner-mini {
+  padding: 0.8rem;
+  text-align: center;
+}
+
+.result-table-wrap {
+  margin: 1.25rem auto 2.5rem;
+}
+
+.result-table th,
+.result-table td {
+  text-align: center !important;
+  vertical-align: middle !important;
+  white-space: nowrap;
+}
+
+.result-table th:first-child,
+.result-table td:first-child {
+  text-align: left !important;
+}
+
+.vgn-row {
+  background: #edf5ff !important;
+}
+
+.result-heading {
+  margin-top: 2.75rem !important;
+}
+
+.result-cards {
+  margin-top: 1.3rem;
+  margin-bottom: 1.2rem;
+}
+
+.result-card {
+  height: 100%;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  background: #fff;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.result-number {
+  font-family: 'Google Sans', sans-serif;
+  color: #3273dc;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
+}
+
+.result-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.footer {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+@media screen and (max-width: 768px) {
+  .publication-title {
+    font-size: 2.15rem !important;
+  }
+
+  .planner-row {
+    flex-direction: column;
+  }
+
+  .planner-box,
+  .planner-stack {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .planner-arrow {
+    transform: rotate(90deg);
+  }
+}
