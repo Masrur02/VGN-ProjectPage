@@ -8,7 +8,6 @@
   <title>VGN: Value-Guided Navigation from RGB for Robot Motion Planning</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
@@ -27,22 +26,17 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
     </a>
   </div>
   <div class="navbar-menu">
     <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="#top">
-        <span class="icon"><i class="fas fa-home"></i></span>
-      </a>
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">More</a>
+        <a class="navbar-link">More Research</a>
         <div class="navbar-dropdown">
           <a class="navbar-item" href="#abstract">Abstract</a>
-          <a class="navbar-item" href="#method">Method</a>
-          <a class="navbar-item" href="#results">Results</a>
+          <a class="navbar-item" href="#approach">Approach</a>
+          <a class="navbar-item" href="#experiments">Experiments</a>
           <a class="navbar-item" href="#BibTeX">BibTeX</a>
         </div>
       </div>
@@ -50,100 +44,25 @@
   </div>
 </nav>
 
-<section class="hero" id="top">
+<section class="hero">
   <div class="hero-body">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">
-            VGN: Value-Guided Navigation from RGB for Robot Motion Planning
-          </h1>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">Anonymous Authors</span>
-          </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">Under review at ICLR 2027</span>
-          </div>
-
+          <h1 class="title is-2 publication-title">VGN: Value-Guided Navigation from RGB for Robot Motion Planning</h1>
           <div class="column has-text-centered">
             <div class="publication-links">
               <span class="link-block">
                 <a href="#video" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-video"></i></span>
-                  <span>Video</span>
+                  <span class="icon"><i class="fab fa-youtube"></i></span><span>Video</span>
                 </a>
               </span>
               <span class="link-block">
-                <a href="#results" class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon"><i class="fas fa-chart-bar"></i></span>
-                  <span>Results</span>
+                <a href="#BibTeX" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-quote-left"></i></span><span>BibTeX</span>
                 </a>
-              </span>
-              <span class="link-block">
-                <span class="button is-normal is-rounded is-dark is-static">
-                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                  <span>Paper</span>
-                </span>
-              </span>
-              <span class="link-block">
-                <span class="button is-normal is-rounded is-dark is-static">
-                  <span class="icon"><i class="fab fa-github"></i></span>
-                  <span>Code</span>
-                </span>
               </span>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <img id="teaser" src="./assets/animated_tiny/sim_final.webp"
-           alt="VGN closed-loop navigation preview">
-      <h2 class="subtitle has-text-centered">
-        <span class="vgn">VGN</span> learns a dense goal-conditioned planning representation from RGB
-        and exposes it to multiple downstream planners.
-      </h2>
-    </div>
-  </div>
-</section>
-
-<section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item">
-          <div class="result-slide">
-            <h3>Graph Search</h3>
-            <p>Explicit search over the learned traversability and CTG fields.</p>
-            <strong>80% Forest success</strong>
-          </div>
-        </div>
-        <div class="item">
-          <div class="result-slide">
-            <h3>Direct Gradient</h3>
-            <p>Follow local descent directions of the goal-conditioned CTG.</p>
-            <strong>71% City success</strong>
-          </div>
-        </div>
-        <div class="item">
-          <div class="result-slide">
-            <h3>Gradient Sampling</h3>
-            <p>Use CTG gradients to guide short-horizon candidate rollouts.</p>
-            <strong>0.989 City SPL</strong>
-          </div>
-        </div>
-        <div class="item">
-          <div class="result-slide">
-            <h3>Efficient Inference</h3>
-            <p>Student representation replaces the expensive teacher stack.</p>
-            <strong>42.7 ms / 23.44 FPS</strong>
           </div>
         </div>
       </div>
@@ -159,16 +78,17 @@
         <div class="content has-text-justified">
           <p>
             Visual navigation from monocular RGB requires reliable scene understanding and safe
-            goal-directed decision making. VGN learns a dense traversability map and a
-            goal-conditioned cost-to-go (CTG) representation directly from a single RGB observation.
-            A teacher pipeline combines vision foundation models with classical planning to convert
-            static RGB images into dense navigation-oriented pseudo-supervision.
+            goal-directed decision making. VGN learns dense traversability and a goal-conditioned
+            cost-to-go (CTG) representation directly from a single RGB observation. Instead of
+            requiring trajectory-centric supervision or robot interaction, a teacher pipeline
+            combines vision foundation models with classical planning to convert static RGB images
+            into dense navigation-oriented pseudo-supervision.
           </p>
           <p>
-            At deployment, the teacher is removed. The student predicts traversability and CTG from RGB,
-            providing a reusable planning interface that supports graph search, direct gradient rollout,
-            and gradient-guided sampling. This decouples representation learning from a specific
-            trajectory decoder and enables closed-loop navigation in simulation and on a Unitree Go2.
+            At deployment, the teacher is removed. The student predicts traversability and CTG from
+            RGB, providing an explicit planning representation that can be consumed by multiple
+            downstream planners, including graph search, direct gradient rollout, and
+            gradient-guided sampling.
           </p>
         </div>
       </div>
@@ -178,92 +98,11 @@
       <div class="column is-four-fifths">
         <h2 class="title is-3">Video</h2>
         <div class="publication-video">
-          <img src="./assets/animated_tiny/sim_final.webp"
-               alt="VGN project video preview">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="method">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered">
-      <div class="column is-full-width">
-        <h2 class="title is-3">Method</h2>
-
-        <h3 class="title is-4">From RGB to a planning representation</h3>
-        <div class="content has-text-justified">
-          <p>
-            During training, the teacher converts grounded semantic regions into traversability
-            supervision and propagates a goal-conditioned CTG field using classical planning.
-            The student learns these dense representations directly from RGB.
-          </p>
-        </div>
-
-        <div class="vgn-pipeline">
-          <div>RGB</div><span>→</span>
-          <div>Traversability</div><span>→</span>
-          <div>Goal-conditioned CTG</div><span>→</span>
-          <div>Planner</div>
-        </div>
-
-        <br/>
-
-        <div class="columns is-centered">
-          <div class="column">
-            <div class="content">
-              <h2 class="title is-3">Semantic Traversability</h2>
-              <p>
-                Semantic region supervision distills terrain-aware information into the student’s
-                dense representation.
-              </p>
-              <div class="simple-panel">
-                Teacher semantics → dense student features → traversability
-              </div>
-            </div>
-          </div>
-
-          <div class="column">
-            <div class="content">
-              <h2 class="title is-3">Goal-Conditioned CTG</h2>
-              <p>
-                The CTG field changes with the projected goal while respecting traversability-aware
-                scene structure.
-              </p>
-              <div class="simple-panel">
-                Traversability + goal + spatial context → dense CTG
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <h3 class="title is-4">Planner-Agnostic Navigation</h3>
-        <div class="content has-text-justified">
-          <p>
-            VGN does not directly regress one fixed trajectory. The same learned traversability + CTG
-            representation can be consumed by multiple downstream planners, including graph search,
-            direct gradient rollout, and gradient-guided sampling.
-          </p>
-        </div>
-
-        <div class="columns is-centered planner-columns">
-          <div class="column has-text-centered">
-            <div class="simple-panel">
-              <b>Graph Search</b><br>
-              Explicit collision-aware search
-            </div>
-          </div>
-          <div class="column has-text-centered">
-            <div class="simple-panel">
-              <b>Direct Gradient</b><br>
-              Follow the CTG descent direction
-            </div>
-          </div>
-          <div class="column has-text-centered">
-            <div class="simple-panel">
-              <b>Gradient Sampling</b><br>
-              Sample local rollouts guided by CTG
+          <div class="youtube-placeholder">
+            <div>
+              <i class="fab fa-youtube"></i>
+              <p>Full high-resolution project video</p>
+              <span>Upload to YouTube and paste the video ID here for final embedding.</span>
             </div>
           </div>
         </div>
@@ -272,28 +111,70 @@
   </div>
 </section>
 
-<section class="section" id="results">
+<section class="section" id="approach">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Results</h2>
+        <h2 class="title is-3">Approach</h2>
 
-        <h3 class="title is-4">Cross-Environment Generalization</h3>
         <div class="content has-text-justified">
+          <h3 class="title is-4">Motivation</h3>
           <p>
-            Training on RUGD transfers zero-shot to RELLIS, GOOSE, NaviTrace, and Cityscapes.
+            Most visual navigation methods either predict actions or trajectories directly, or rely
+            on hand-designed intermediate costs. VGN instead learns a dense navigation representation
+            from RGB that separates scene understanding from the downstream planning mechanism. The
+            goal is to preserve explicit planning structure while retaining the flexibility of learned
+            perception.
           </p>
+
+          <h3 class="title is-4">VGN</h3>
+          <p>
+            A teacher pipeline grounds semantic regions in the input image, converts these regions into
+            a dense traversability map, samples a projected goal, and computes a traversability-aware CTG
+            field using classical planning. A student network then learns to predict both traversability
+            and goal-conditioned CTG from RGB. At test time, the same representation can support graph
+            search, direct CTG-gradient rollout, or gradient-guided sampling.
+          </p>
+        </div>
+
+        <div class="pipeline-figure">
+          <div class="pipe-node"><b>RGB</b><span>Monocular observation</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-node"><b>Traversability</b><span>Dense terrain feasibility</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-node"><b>Goal-conditioned CTG</b><span>Dense planning value</span></div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-node"><b>Planner</b><span>Graph / Gradient / Sampling</span></div>
+        </div>
+
+        <div class="content has-text-justified">
+          <h3 class="title is-4">Dataset</h3>
+          <p>
+            We train on RUGD and evaluate zero-shot on RELLIS, GOOSE, NaviTrace, and Cityscapes.
+            The teacher generates dense traversability and CTG supervision from static RGB images,
+            allowing the student to learn goal-conditioned navigation structure without expert
+            trajectories. We also evaluate closed-loop navigation in Forest and City simulation
+            environments and deploy the learned system on a Unitree Go2 for real-world testing.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="experiments">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Experiments</h2>
+
+        <h3 class="title is-4">Cross-environment generalization</h3>
+        <div class="content has-text-justified">
+          <p>Training on RUGD transfers to multiple unseen outdoor and urban datasets.</p>
         </div>
         <div class="table-container">
-          <table class="table is-fullwidth is-hoverable">
-            <thead>
-              <tr>
-                <th>Train → Test</th>
-                <th>Trav. MAE ↓</th>
-                <th>IoU@0.5 ↑</th>
-                <th>CTG Corr. ↑</th>
-              </tr>
-            </thead>
+          <table class="table is-fullwidth is-hoverable result-table">
+            <thead><tr><th>Train → Test</th><th>Trav. MAE ↓</th><th>IoU@0.5 ↑</th><th>CTG Corr. ↑</th></tr></thead>
             <tbody>
               <tr><td>RUGD → RUGD</td><td>0.037</td><td>0.933</td><td>0.952</td></tr>
               <tr><td>RUGD → RELLIS</td><td>0.060</td><td>0.880</td><td><b>0.968</b></td></tr>
@@ -304,18 +185,10 @@
           </table>
         </div>
 
-        <h3 class="title is-4">Closed-Loop Navigation</h3>
+        <h3 class="title is-4">Closed-loop navigation</h3>
         <div class="table-container">
-          <table class="table is-fullwidth is-hoverable">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Forest Success ↑</th>
-                <th>Forest SPL ↑</th>
-                <th>City Success ↑</th>
-                <th>City SPL ↑</th>
-              </tr>
-            </thead>
+          <table class="table is-fullwidth is-hoverable result-table">
+            <thead><tr><th>Method</th><th>Forest Success ↑</th><th>Forest SPL ↑</th><th>City Success ↑</th><th>City SPL ↑</th></tr></thead>
             <tbody>
               <tr><td>iPlanner</td><td>64%</td><td>0.639</td><td>65%</td><td>0.649</td></tr>
               <tr><td>ViPlanner</td><td>55%</td><td>0.546</td><td>70%</td><td>0.699</td></tr>
@@ -327,13 +200,39 @@
           </table>
         </div>
 
-        <h3 class="title is-4">Runtime</h3>
+        <h3 class="title is-4">Navigation demonstrations</h3>
         <div class="content has-text-justified">
           <p>
-            The learned VGN pipeline runs in <b>42.7 ms</b> on RTX 4090 (<b>23.44 FPS</b>), compared
-            with <b>473.8 ms</b> for the teacher pipeline. On the Unitree Go2 deployment stack,
-            RGB-to-local-motion planning runs at approximately <b>1.40 Hz</b>.
+            The final page uses high-resolution videos arranged two per row, so each environment can
+            be inspected directly instead of only through the full project video.
           </p>
+        </div>
+
+        <div class="demo-grid">
+          <div class="demo-card">
+            <div class="video-placeholder">Simulation video</div>
+            <h4 class="title is-5">Closed-loop Simulation</h4>
+          </div>
+          <div class="demo-card">
+            <div class="video-placeholder">Outdoor video</div>
+            <h4 class="title is-5">Outdoor Navigation</h4>
+          </div>
+          <div class="demo-card">
+            <div class="video-placeholder">Obstacle-rich video</div>
+            <h4 class="title is-5">Obstacle-rich Outdoor Scene</h4>
+          </div>
+          <div class="demo-card">
+            <div class="video-placeholder">Indoor video</div>
+            <h4 class="title is-5">Indoor Transfer</h4>
+          </div>
+          <div class="demo-card">
+            <div class="video-placeholder">Low-light video</div>
+            <h4 class="title is-5">Evening / Low Light</h4>
+          </div>
+          <div class="demo-card">
+            <div class="video-placeholder">Additional real-world video</div>
+            <h4 class="title is-5">Additional Real-World Demo</h4>
+          </div>
         </div>
       </div>
     </div>
@@ -341,7 +240,7 @@
 </section>
 
 <section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
+  <div class="container is-max-desktop">
     <h2 class="title">BibTeX</h2>
     <pre><code>@inproceedings{anonymous2027vgn,
   author    = {Anonymous Authors},
@@ -352,25 +251,14 @@
   </div>
 </section>
 
-<footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content has-text-centered">
-          <p>
-            Website template adapted from
-            <a href="https://nerfies.github.io/">Nerfies</a>.
-          </p>
-          <p>
-            The original Nerfies project-page template is licensed under
-            <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.
-            The original analytics snippet has been removed.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
+<br>
+<center class="is-size-10">
+  Website design adapted from
+  <a href="https://nerfies.github.io/" class="external-link"><span class="dnerf">Nerfies</span></a>
+  and the
+  <a href="https://github.com/model-base-reannotation/model-base-reannotation.github.io">Model-Based Reannotation project page</a>.
+</center>
+<br>
 
 </body>
 </html>
